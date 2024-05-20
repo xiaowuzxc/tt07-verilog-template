@@ -23,7 +23,8 @@ reg [7:0]sft_reg;
 
 
   always @(posedge clk) begin
-    sft_reg[7:0] <= {sft_reg[6:0],ui_in[0]}
+    sft_reg[7:0] <= {sft_reg[6:0],ui_in[0]};
   end
+
 
 endmodule

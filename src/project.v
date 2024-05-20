@@ -16,14 +16,23 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 reg [7:0]sft_reg;
+reg [7:0]ram[0:63];
+wire [5:0]addr =ui_in[7:2];
+reg [7:0]otreg;
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+  assign uo_out  = otreg;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = ui_in + sft_reg;
   assign uio_oe  = sft_reg;
 
 
   always @(posedge clk) begin
     sft_reg[7:0] <= {sft_reg[6:0],ui_in[0]};
+  end
+
+  always @(posedge clk) begin
+    otreg <= ram[addr];
+    if(ui_in[1])
+      ram[addr] <= {sft_reg[6:0],ui_in[0]};
   end
 
 
